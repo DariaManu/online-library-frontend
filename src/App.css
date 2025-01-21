@@ -1,3 +1,8 @@
+:root {
+    --primary-accent-color: #000B2E;
+    --second-accent-color: #081636;
+}
+
 .authForm {
     height: 100%;
 }
@@ -16,4 +21,46 @@
 
 .error {
     color: rgb(228, 10, 10);
+}
+
+.applicationNavBar {
+    background-color: var(--primary-accent-color);
+    display: flex;
+    flex-direction: row;
+}
+
+.applicationNavBarUserInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    margin-left: auto;
+}
+
+.applicationNavBarElement {
+    align-items: center;
+}
+
+.applicationNavBarElement:hover {
+    background-color: var(--second-accent-color);
+}
+
+.applicationNavBarText {
+    color: #ffffff;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.homePageMainContent {
+    margin-top: 50px;
+}
+
+.bookCardButton {
+    background-color: var(--primary-accent-color) !important;
+    color: white;
+}
+
+.bookCardButton:hover {
+    background-color: #0a1d47 !important;
+    cursor: pointer;
 }
