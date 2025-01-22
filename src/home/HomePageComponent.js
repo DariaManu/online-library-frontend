@@ -7,7 +7,7 @@ import {BooksList} from "./BooksList";
 import {handleNotification} from "../utils/NotificationToast";
 
 export const HomePageComponent = () => {
-    const {auth, logout, notificationMessage, newNotification, setNewNotification} = useContext(AuthContext);
+    const {auth, logout, notificationMessage, newNotification, setNewNotification, newBook} = useContext(AuthContext);
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -38,8 +38,11 @@ export const HomePageComponent = () => {
 
     useEffect(() => {
         if (newNotification) {
-            console.log(notificationMessage);
-            handleNotification(notificationMessage);
+            let bookWithSameId = books.find(b => b.bookId === newBook.bookId);
+            if (bookWithSameId == null) {
+                setBooks([...books, newBook]);
+                handleNotification(notificationMessage);
+            }
             setNewNotification(false);
         }
     }, [newNotification])

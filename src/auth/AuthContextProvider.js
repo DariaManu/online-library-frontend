@@ -14,8 +14,9 @@ export const AuthContextProvider = ({children}) => {
         return null;
     });
     const [webSocket, setWebSocket] = useState(null);
-    const [notificationMessage, setNotificationMessage] = useState("");
     const [newNotification, setNewNotification] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState("");
+    const [newBook, setNewBook] = useState(null);
 
     const login = ({ email, password }) => {
         return new Promise((resolve, reject) => {
@@ -56,7 +57,15 @@ export const AuthContextProvider = ({children}) => {
             console.log(event);
             if (event && event.data) {
                 console.log(`Received message: ${event.data}`);
-                setNotificationMessage(event.data);
+                let notification = JSON.parse(event.data);
+                setNotificationMessage(notification.eventMessage);
+                let nb = {
+                    bookId: notification.bookId,
+                    title: notification.title,
+                    author: notification.author,
+                    genre: notification.genre
+                }
+                setNewBook(nb);
                 setNewNotification(true);
             }
         }
@@ -80,16 +89,16 @@ export const AuthContextProvider = ({children}) => {
     useEffect(() => {
         if (auth) {
             localStorage.setItem("auth", JSON.stringify(auth));
-            if (webSocket) {
+            /*if (webSocket) {
                 webSocket.onopen();
             } else {
                 connectToWebSocket();
-            }
+            }*/
         }
     }, [auth]);
 
     return (
-        <AuthContext.Provider value={{auth, setAuth, notificationMessage, newNotification, setNewNotification, login, logout}}>
+        <AuthContext.Provider value={{auth, setAuth, notificationMessage, newNotification, setNewNotification, newBook, login, logout}}>
             {children}
         </AuthContext.Provider>
     )
