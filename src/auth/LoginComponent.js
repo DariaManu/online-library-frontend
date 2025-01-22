@@ -16,8 +16,8 @@ export const LoginComponent = () => {
     const handleClickOnSubmitButton = async (e) => {
         e.preventDefault();
         let loginFailed = false;
-        console.log(email.current.value);
-        console.log(password.current.value);
+        //console.log(email.current.value);
+        //console.log(password.current.value);
         if (!email.current.value || !password.current.value) {
             e.preventDefault();
             e.stopPropagation();

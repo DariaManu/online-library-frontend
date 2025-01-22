@@ -13,6 +13,9 @@ export const AuthContextProvider = ({children}) => {
         }
         return null;
     });
+    const [webSocket, setWebSocket] = useState(null);
+    const [notificationMessage, setNotificationMessage] = useState("");
+    const [newNotification, setNewNotification] = useState(false);
 
     const login = ({ email, password }) => {
         return new Promise((resolve, reject) => {
@@ -31,15 +34,39 @@ export const AuthContextProvider = ({children}) => {
                         };
                         localStorage.setItem("auth", JSON.stringify(auth));
                         setAuth(auth);
+                        connectToWebSocket();
                         resolve();
                     }
                 });
         });
     };
 
+    const connectToWebSocket = () => {
+        const ws = new WebSocket("ws://localhost:9095/webSocket");
+        ws.onopen = () => {
+            console.log("WebSocket connection established");
+        }
+        ws.onclose = () => {
+            console.log("WebSocket connection closed");
+        }
+        ws.onerror = (error) => {
+            console.log("WebSocket error: " + error);
+        }
+        ws.onmessage = (event) => {
+            console.log(event);
+            if (event && event.data) {
+                console.log(`Received message: ${event.data}`);
+                setNotificationMessage(event.data);
+                setNewNotification(true);
+            }
+        }
+        setWebSocket(ws)
+    }
+
     const logout = () => {
         setAuth(null);
         localStorage.removeItem("auth");
+        webSocket.onclose();
     };
 
     useEffect(() => {
@@ -53,11 +80,16 @@ export const AuthContextProvider = ({children}) => {
     useEffect(() => {
         if (auth) {
             localStorage.setItem("auth", JSON.stringify(auth));
+            if (webSocket) {
+                webSocket.onopen();
+            } else {
+                connectToWebSocket();
+            }
         }
     }, [auth]);
 
     return (
-        <AuthContext.Provider value={{auth, setAuth, login, logout}}>
+        <AuthContext.Provider value={{auth, setAuth, notificationMessage, newNotification, setNewNotification, login, logout}}>
             {children}
         </AuthContext.Provider>
     )

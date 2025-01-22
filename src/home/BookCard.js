@@ -26,7 +26,7 @@ export const BookCard = (props) => {
                     if (res && res.status === 200 && res.data) {
                         const file = new Blob([res.data], {type: res.headers["content-type"]});
                         const fileURL = URL.createObjectURL(file);
-                        console.log(fileURL);
+                        //console.log(fileURL);
                         setBookCoverImage(fileURL);
                         setIsLoaded(true);
                     }
@@ -42,7 +42,7 @@ export const BookCard = (props) => {
                 handleError("Could not download book");
             })
             .then((res) => {
-                console.log(res);
+                //console.log(res);
                 if (res && res.status === 200 && res.data) {
                     const file = new Blob([res.data], {type: res.headers["content-type"]});
                     FileSaver.saveAs(file, props.book.title);

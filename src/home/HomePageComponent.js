@@ -4,9 +4,10 @@ import {AuthContext} from "../auth/AuthContextProvider";
 import {BooksApi} from "./BooksApi";
 import {Navigate} from "react-router";
 import {BooksList} from "./BooksList";
+import {handleNotification} from "../utils/NotificationToast";
 
 export const HomePageComponent = () => {
-    const {auth, logout} = useContext(AuthContext);
+    const {auth, logout, notificationMessage, newNotification, setNewNotification} = useContext(AuthContext);
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -25,7 +26,7 @@ export const HomePageComponent = () => {
                     if (res) {
                         if (res.status === 200) {
                             if (res.data != null) {
-                                console.log(res.data);
+                                //console.log(res.data);
                                 setBooks(res.data);
                             }
                         }
@@ -34,6 +35,14 @@ export const HomePageComponent = () => {
                 });
         }
     }, [books, loading])
+
+    useEffect(() => {
+        if (newNotification) {
+            console.log(notificationMessage);
+            handleNotification(notificationMessage);
+            setNewNotification(false);
+        }
+    }, [newNotification])
 
     if (auth == null) {
         return <Navigate to={"/login"} />
