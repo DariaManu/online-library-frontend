@@ -1,3 +1,4 @@
+import React from "react";
 import {createContext, useEffect, useState} from "react";
 import {AuthenticationApi} from "./AuthenticationApi";
 
@@ -75,7 +76,9 @@ export const AuthContextProvider = ({children}) => {
     const logout = () => {
         setAuth(null);
         localStorage.removeItem("auth");
-        webSocket.onclose();
+        if (webSocket) {
+            webSocket.onclose();
+        }
     };
 
     useEffect(() => {

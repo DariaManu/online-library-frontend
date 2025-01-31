@@ -1,10 +1,12 @@
-import {ApplicationNavBar} from "../utils/ApplicationNavBar";
+import React from "react";
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../auth/AuthContextProvider";
 import {BooksApi} from "./BooksApi";
 import {Navigate} from "react-router";
 import {BooksList} from "./BooksList";
 import {handleNotification} from "../utils/NotificationToast";
+
+import NavBarComponent from "nav/NavBarComponent";
 
 export const HomePageComponent = () => {
     const {auth, logout, notificationMessage, newNotification, setNewNotification, newBook} = useContext(AuthContext);
@@ -53,7 +55,7 @@ export const HomePageComponent = () => {
 
     return (
         <div>
-            <ApplicationNavBar/>
+            <NavBarComponent name={auth.firstName + " " + auth.lastName} logout={logout}/>
             <div className="container homePageMainContent">
                 <BooksList books={books}/>
             </div>

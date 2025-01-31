@@ -1,3 +1,4 @@
+import React from "react";
 import {Bounce, toast} from "react-toastify";
 
 export const handleNotification = (text) => {

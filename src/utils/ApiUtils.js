@@ -14,8 +14,4 @@ export class ApiUtils {
     static getHttpConfigWithResponseType(auth, responseMimeType) {
         return {...ApiUtils.getAuthorizationHeader(auth), responseType: responseMimeType};
     }
-
-    static getBackendBaseUrl() {
-        return process.env.BACKEND_BASE_URL;
-    }
 }
