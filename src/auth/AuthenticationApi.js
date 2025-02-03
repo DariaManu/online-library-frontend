@@ -1,22 +1,17 @@
 import React from "react";
 import axios from "axios";
+import {ApiUtils} from "../utils/ApiUtils";
 
 export class AuthenticationApi {
     static LoginApi({email, password}) {
-        //console.log("http://localhost:9090/account/login");
-        return axios.post("http://localhost:9090/account/login", {
+        return axios.post(ApiUtils.getBackendServicesURL() + "/account/login", {
             email,
             password
         });
     };
 
     static RegisterApi({firstName, lastName, email, password}) {
-        //console.log(firstName);
-        //console.log(lastName);
-        //console.log(email);
-        //console.log(password);
-        //console.log("http://localhost:9090/account/register/user");
-        return axios.post( "http://localhost:9090/account/register/user", {
+        return axios.post( ApiUtils.getBackendServicesURL() + "/account/register/user", {
             firstName,
             lastName,
             email,

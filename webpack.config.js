@@ -1,6 +1,14 @@
+const webpack = require("webpack");
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
+
+const dotenv = require('dotenv');
+const env = dotenv.config().parsed;
+const envKeys = Object.keys(env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(env[next]);
+    return prev;
+}, {});
 
 module.exports = {
     entry: path.join(__dirname, "src", "index.js"),
@@ -20,6 +28,7 @@ module.exports = {
             exposes: {},
             shared: {react: {singleton: true}, "react-dom": {singleton: true}}
         }),
+        new webpack.DefinePlugin(envKeys)
     ],
     module: {
         rules: [

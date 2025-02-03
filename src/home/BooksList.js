@@ -3,14 +3,12 @@ import {Col, Row} from "react-bootstrap";
 import {BookCard} from "./BookCard";
 
 export const BooksList = (props) => {
-    //console.log(props.books);
     const chunkedContent = [];
 
     if (props.books.length > 0) {
         for (let i = 0; i < props.books.length; i += 3) {
             chunkedContent.push(props.books.slice(i, i + 3));
         }
-        //console.log(chunkedContent);
     }
 
     return (

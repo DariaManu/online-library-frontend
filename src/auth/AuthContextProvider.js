@@ -3,6 +3,7 @@ import {createContext, useEffect, useState} from "react";
 import {AuthenticationApi} from "./AuthenticationApi";
 
 import { Buffer } from "buffer";
+import {ApiUtils} from "../utils/ApiUtils";
 
 export const AuthContext = createContext();
 
@@ -44,7 +45,7 @@ export const AuthContextProvider = ({children}) => {
     };
 
     const connectToWebSocket = () => {
-        const ws = new WebSocket("ws://localhost:9095/webSocket");
+        const ws = new WebSocket(ApiUtils.getWebsocketURL() + "/webSocket");
         ws.onopen = () => {
             console.log("WebSocket connection established");
         }

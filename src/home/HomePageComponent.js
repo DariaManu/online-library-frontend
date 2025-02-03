@@ -28,7 +28,6 @@ export const HomePageComponent = () => {
                     if (res) {
                         if (res.status === 200) {
                             if (res.data != null) {
-                                //console.log(res.data);
                                 setBooks(res.data);
                             }
                         }
